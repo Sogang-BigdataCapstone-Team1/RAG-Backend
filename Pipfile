@@ -16,6 +16,8 @@ openai = "*"
 langchain-teddynote = "*"
 pymupdf = "*"
 langchain-upstage = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [dev-packages]
 

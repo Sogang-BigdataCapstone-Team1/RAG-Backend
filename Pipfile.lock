@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ae634332df3bd28ed632d41039cec190de0ed507bc23611f4ba30f5e894d61e1"
+            "sha256": "8a61ebddd76f48430ce1dbdd852092aa3241c0caa98c9a3db8f92845dfe1e4e6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -313,6 +313,15 @@
             ],
             "markers": "python_version < '3.11'",
             "version": "==1.2.2"
+        },
+        "fastapi": {
+            "hashes": [
+                "sha256:0e7a4d0dc0d01c68df21887cce0945e72d3c48b9f4f79dfe7a7d53aa08fbb289",
+                "sha256:596b95adbe1474da47049e802f9a65ab2ffa9c2b07e7efee70eb8a66c9f2f796"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.115.5"
         },
         "feedparser": {
             "hashes": [
@@ -736,11 +745,11 @@
         },
         "langchain-teddynote": {
             "hashes": [
-                "sha256:41818a4650d534139089e0cf4113c50c48bdbe60dc564c0c7f6a3e9aad457471"
+                "sha256:0c07729da7b7400c88f3de2fcab7de9ac1914e5de81ed2924b8b5ee7865a61fe"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==0.3.30"
+            "version": "==0.3.31"
         },
         "langchain-text-splitters": {
             "hashes": [
@@ -1904,6 +1913,14 @@
             "markers": "python_version >= '3.7'",
             "version": "==2.0.35"
         },
+        "starlette": {
+            "hashes": [
+                "sha256:0e4ab3d16522a255be6b28260b938eae2482f98ce5cc934cb08dce8dc3ba5835",
+                "sha256:44cedb2b7c77a9de33a8b74b2b90e9f50d11fcf25d8270ea525ad71a25374ff7"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==0.41.3"
+        },
         "tavily-python": {
             "hashes": [
                 "sha256:2c60b88203b630e1b37fc711913a1090ced6719b3f21089f25ec06e9e1602822",
@@ -2109,6 +2126,15 @@
             ],
             "markers": "python_version >= '3.8' and python_version < '3.12'",
             "version": "==2.2.3"
+        },
+        "uvicorn": {
+            "hashes": [
+                "sha256:82ad92fd58da0d12af7482ecdb5f2470a04c9c9a53ced65b9bbb4a205377602e",
+                "sha256:ee9519c246a72b1c084cea8d3b44ed6026e78a4a309cbedae9c37e4cb9fbb175"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.32.1"
         },
         "wget": {
             "hashes": [
