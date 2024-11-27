@@ -7,6 +7,28 @@ from utils.config import load_environment
 from utils.session import get_session_history
 from langchain.schema import HumanMessage, AIMessage
 
+from datetime import datetime
+from retrievers import setup_retrievers
+from tools import setup_tools
+from llm import setup_llm
+from agent import setup_agent
+from parsers import setup_parser
+from utils.config import load_environment
+from utils.session import get_session_history
+from langchain.schema import HumanMessage, AIMessage
+
+
+from retrievers import setup_retrievers
+from tools import setup_tools
+from llm import setup_llm
+from agent import setup_agent
+from parsers import setup_parser
+from utils.config import load_environment
+from utils.session import get_session_history
+from langchain.schema import HumanMessage, AIMessage
+from datetime import datetime
+
+
 def main():
     # 환경 변수 로드
     load_environment()
@@ -32,11 +54,18 @@ def main():
             break
 
         try:
+            # 현재 시간을 계산
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
             # 대화 기록 전달
             chat_history = [{"type": message.type, "content": message.content} for message in session_history.messages]
 
             # 에이전트 실행
-            response = agent_executor.invoke({"input": user_input, "chat_history": chat_history})
+            response = agent_executor.invoke({
+                "input": user_input,
+                "chat_history": chat_history,
+                "current_time": current_time  # 현재 시간을 전달
+            })
 
             # 딕셔너리 형태의 응답 처리
             if isinstance(response, dict) and 'output' in response:
@@ -60,6 +89,7 @@ def main():
             print(f"Human: {message.content}")
         elif isinstance(message, AIMessage):
             print(f"AI: {message.content}")
+
 
 if __name__ == "__main__":
     main()

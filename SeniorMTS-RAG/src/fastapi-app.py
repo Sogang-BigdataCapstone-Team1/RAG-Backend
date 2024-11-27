@@ -7,6 +7,7 @@ from utils.config import load_environment
 from utils.session import get_session_history
 from langchain.schema import HumanMessage, AIMessage
 from pydantic import BaseModel
+from datetime import datetime
 
 # FastAPI 인스턴스 생성
 app = FastAPI()
@@ -31,26 +32,33 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     output: str
 
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
     사용자 입력과 세션 ID를 받아 AI 응답을 반환하는 API 엔드포인트
     """
     try:
-        # 세션 관리
+        # 세션 기록 가져오기
         session_history = get_session_history(request.session_id)
 
-        # 기존 대화 기록 가져오기
-        chat_history = [{"type": message.type, "content": message.content} for message in session_history.messages]
+        # 기존 대화 기록 가져오기 (직접 사용 가능)
+        chat_history = session_history.messages
+
+        # 현재 시간 추가 (필요할 경우)
+        current_time = datetime.utcnow().isoformat()
 
         # 에이전트 실행
-        response = agent_executor.invoke({"input": request.user_input, "chat_history": chat_history})
+        response = agent_executor.invoke(
+            {
+                "input": request.user_input,
+                "chat_history": chat_history,
+                "current_time": current_time,
+            }
+        )
 
-        # 응답 처리
-        if isinstance(response, dict) and 'output' in response:
-            agent_output = response['output']
-        else:
-            agent_output = str(response)
+        # 에이전트 응답 처리
+        agent_output = response.get("output", str(response))
 
         # 세션 기록 갱신
         session_history.add_message(HumanMessage(content=request.user_input))
@@ -60,7 +68,10 @@ async def chat(request: ChatRequest):
         return ChatResponse(output=agent_output)
 
     except Exception as e:
+        # 에러 로그 출력 (서버 콘솔)
+        print(f"[ERROR] {e}")
         raise HTTPException(status_code=500, detail=f"오류 발생: {e}")
+
 
 @app.get("/session/{session_id}")
 async def get_session(session_id: str):
@@ -72,9 +83,13 @@ async def get_session(session_id: str):
         return {
             "session_id": session_id,
             "messages": [
-                {"type": "Human" if isinstance(message, HumanMessage) else "AI", "content": message.content}
+                {
+                    "type": "Human" if isinstance(message, HumanMessage) else "AI",
+                    "content": message.content,
+                }
                 for message in session_history.messages
             ],
         }
     except Exception as e:
+        print(f"[ERROR] {e}")
         raise HTTPException(status_code=500, detail=f"오류 발생: {e}")

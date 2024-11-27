@@ -1,5 +1,5 @@
-# Python 3.10 slim 이미지를 기반으로 생성
-FROM python:3.10-slim
+# Python 3.11 slim 이미지를 기반으로 생성
+FROM python:3.11-slim
 
 # 작업 디렉토리 설정
 WORKDIR /app

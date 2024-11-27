@@ -27,7 +27,7 @@ def main():
     csv_path = "../data/stock_news.csv"
     namespace = "stocknews"
 
-    # Pinecone 초기화 및 인스턴스 생성
+    # Pinecone 초기화 및 인덱스 생성
     pinecone_api_key = os.getenv("PINECONE_API_KEY")
     pc = Pinecone(api_key=pinecone_api_key)
 
@@ -52,12 +52,13 @@ def main():
     # 본문 텍스트 추출
     texts = df['content'].tolist()
 
-    # 메타데이터 생성
+    # 메타데이터 생성 (키워드 추가)
     metadatas = [
         {
             "title": row["title"],
             "time": row["time"],
-            "url": row["url"]
+            "url": row["url"],
+            "keyword": row["keyword"]  # 키워드 컬럼 추가
         }
         for _, row in df.iterrows()
     ]
@@ -81,7 +82,7 @@ def main():
     # Preprocess 문서를 전달
     contents, processed_metadatas = preprocess_documents(
         split_docs=split_docs,
-        metadata_keys=["title", "time", "url"],  # 메타데이터 키 설정
+        metadata_keys=["title", "time", "url", "keyword"],  # 메타데이터 키에 keyword 포함
         min_length=5,  # 필터링 최소 길이
         use_basename=False,  # 파일 기반이 아니므로 False
     )
