@@ -59,12 +59,9 @@ def real_time_stock_tool(code, start_time=None, end_time=None, time_from='day'):
     if not data:
         return "No data available for the given stock code and time range."
 
-    # 표 데이터를 문자열로 변환
-    header = data[0]
-    rows = data[1:]
-    formatted_data = [", ".join(map(str, header))]
-    for row in rows:
-        formatted_data.append(", ".join(map(str, row)))
+    # 날짜와 시가 데이터만 추출하여 문자열로 변환
+    rows = data[1:]  # 헤더 제외
+    formatted_data = [f"{row[0]}: {row[1]}" for row in rows]
 
     return "\n".join(formatted_data)
 
@@ -80,6 +77,7 @@ def setup_tools(cycle_retriever, stock_retriever, news_retriever):
         func=real_time_stock_tool,
         name="real_time_stock_data",  # 공백 없는 유효한 이름
         description=(
+            "When using the 'real_time_stock_data' tool, only stock prices should be displayed, and no other information should be included in the output."
             "Retrieve accurate and up-to-date stock price and volume data for a given stock. "
             "If no date range is provided, defaults to the last 7 days. "
             "Parameters:\n"

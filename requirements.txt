@@ -12,3 +12,4 @@ PyMuPDF # PDF 읽기 및 처리 (fitz 포함)
 langchain-upstage  # Upstage Embeddings 모듈
 fastapi
 uvicorn
+requests

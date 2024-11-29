@@ -82,7 +82,7 @@ def main():
         except Exception as e:
             print(f"오류 발생: {e}")
 
-    # 세션 기록 출력
+        # 세션 기록 출력
     print("\n[세션 기록]:")
     for message in session_history.messages:
         if isinstance(message, HumanMessage):
