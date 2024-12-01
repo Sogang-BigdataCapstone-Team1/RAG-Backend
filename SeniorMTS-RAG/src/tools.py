@@ -50,7 +50,7 @@ def get_sise(code, start_time, end_time, time_from='day'):
 def real_time_stock_tool(code, start_time=None, end_time=None, time_from='day'):
     """
     Retrieve real-time stock price and volume data.
-    If no dates are provided, defaults to the last 7 days.
+    If no dates are provided, ask to user.
     """
     if not start_time or not end_time:
         start_time, end_time = get_default_date_range()
@@ -59,9 +59,12 @@ def real_time_stock_tool(code, start_time=None, end_time=None, time_from='day'):
     if not data:
         return "No data available for the given stock code and time range."
 
-    # 날짜와 시가 데이터만 추출하여 문자열로 변환
-    rows = data[1:]  # 헤더 제외
-    formatted_data = [f"{row[0]}: {row[1]}" for row in rows]
+    # 표 데이터를 문자열로 변환
+    header = data[0]
+    rows = data[1:]
+    formatted_data = [", ".join(map(str, header))]
+    for row in rows:
+        formatted_data.append(", ".join(map(str, row)))
 
     return "\n".join(formatted_data)
 
